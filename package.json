@@ -1,0 +1,26 @@
+{
+    "author": "Jahrome <rome@live.com>",
+    "dependencies": {
+        "@vitejs/plugin-basic-ssl": "^1.2.0",
+        "vite": "^6.0.7"
+    },
+    "description": "web-components in yhwh-script style",
+    "keywords": [
+        "JavaScript",
+        "WebComponents"
+    ],
+    "license": "Unlicense",
+    "main": "index.js",
+    "name": "web-components",
+    "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/J4H20M3/web-components"
+    },
+    "scripts": {
+        "dev": "vite",
+        "gen": "node gen.cjs",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "type": "module"
+}

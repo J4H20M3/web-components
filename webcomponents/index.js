@@ -1,0 +1,1 @@
+export const webcomponents={"home":[{"componentName":"navigation","filePath":"webcomponents\\home\\home-navigation.html"},{"componentName":"switch","filePath":"webcomponents\\home\\home-switch.html"}],"views":[{"componentName":"main","filePath":"webcomponents\\views\\views-main.html"}]};
