@@ -1,5 +1,5 @@
 <script>
-    const nav = $("nav");
+    const nav = shadowDocument.querySelector("nav");
 
     window.onscroll = function () { stickyNavbar() };
 
@@ -13,10 +13,10 @@
         }
     }
 
-    $$("a.navlink").forEach(a => {
-        a.on("click", function (event) {
+    shadowDocument.querySelectorAll("a.navlink").forEach(a => {
+        a.addEventListener("click", function (event) {
             event.preventDefault();
-            nav.$(".active").classList.remove("active");
+            nav.querySelector(".active").classList.remove("active");
             event.target.classList.add("active");
             const url = event.target.getAttribute("href");
             go(url);
@@ -40,9 +40,12 @@
             case "/":
                 section = document.createElement("views-main");
                 break;
+            case "/animals":
+                section = document.createElement("animals-view");
+                break;
             default:
         }
-        const main = document.querySelector("main");
+        const main = shadowDocument.querySelector("#main");
         while (main.firstChild) {
             main.removeChild(main.firstChild);
         }
@@ -53,7 +56,7 @@
             window.scrollX = 0;
             window.scrollY = 0;
         }
-        $$("a.navlink").forEach(a => {
+        shadowDocument.querySelectorAll("a.navlink").forEach(a => {
             a.classList.remove("active");
             if (a.getAttribute("href") == location.pathname) {
                 a.classList.add("active");
@@ -106,5 +109,7 @@
 <template>
     <nav>
         <a class="navlink active" href="/">🏠</a>
+        <a class="navlink" href="/animals">Animals</a>
     </nav>
+    <main id="main"></main>
 </template>

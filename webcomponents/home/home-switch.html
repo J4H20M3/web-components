@@ -1,6 +1,6 @@
 <template>
     <div id="switch" class="wrapper">
-        <input type="checkbox" name="checkbox" class="switch">
+        <input type="checkbox" name="checkbox" class="switch" checked>
     </div>
 </template>
 
@@ -191,5 +191,5 @@
             link.disabled = !link.disabled
         })
     }
-    $('#switch').addEventListener('mousedown', toggleStyle)
+    shadowDocument.querySelector('#switch').addEventListener('mousedown', toggleStyle)
 </script>
