@@ -1,5 +1,7 @@
 <script>
-    const nav = $("nav");
+    let { default: Animals } = await import('./apis/Animals.js');
+
+    const nav = shadowDocument.getElementById("nav");
 
     window.onscroll = function () { stickyNavbar() };
 
@@ -13,10 +15,10 @@
         }
     }
 
-    $$("a.navlink").forEach(a => {
-        a.on("click", function (event) {
+    shadowDocument.querySelectorAll("a.navlink").forEach(a => {
+        a.addEventListener("click", function (event) {
             event.preventDefault();
-            nav.$(".active").classList.remove("active");
+            nav.querySelector(".active").classList.remove("active");
             event.target.classList.add("active");
             const url = event.target.getAttribute("href");
             go(url);
@@ -30,30 +32,44 @@
         }
     });
 
+    let section = null;
+    function getSection() {
+        return new Promise((resolve) => {
+            const checkAgain = function () {
+                if (section) {
+                    resolve(section);
+                } else
+                    setTimeout(checkAgain, 0);
+            }
+            checkAgain();
+        });
+    }
+
     // go("/path")
     window.go = function (route, addToHistory = true) {
         if (addToHistory) {
             history.pushState({ route }, null, route);
         }
-        let section = null;
         switch (route) {
             case "/":
                 section = document.createElement("views-main");
                 break;
+            case "/animals":
+                Animals.getAnimals().then(resultRows => {
+                    section = document.createElement("animals-view");
+                    section.dataset.state = JSON.stringify(resultRows)
+                })
+                break;
             default:
         }
-        const main = document.querySelector("main");
-        while (main.firstChild) {
-            main.removeChild(main.firstChild);
-        }
-
-        if (section) {
-            main.appendChild(section);
+        getSection().then(section => {
+            const main = shadowDocument.querySelector("#main");
+            main.replaceChildren(section);
             // move to top
             window.scrollX = 0;
             window.scrollY = 0;
-        }
-        $$("a.navlink").forEach(a => {
+        })
+        shadowDocument.querySelectorAll("a.navlink").forEach(a => {
             a.classList.remove("active");
             if (a.getAttribute("href") == location.pathname) {
                 a.classList.add("active");
@@ -104,7 +120,9 @@
 </style>
 
 <template>
-    <nav>
+    <nav id="nav">
         <a class="navlink active" href="/">🏠</a>
+        <a class="navlink active" href="/animals">Animals</a>
     </nav>
+    <main id="main"></main>
 </template>

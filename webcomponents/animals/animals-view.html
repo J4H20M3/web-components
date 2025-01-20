@@ -1,0 +1,69 @@
+<script>
+    let { default: Animals } = await import('./apis/Animals.js');
+
+    console.log("HELLO animals")
+    const ul = shadowDocument.querySelector("ul");
+
+    state.forEach(row => {
+        const animalsLi = document.createElement("animals-li");
+        ul.appendChild(animalsLi);
+        animalsLi.dataset.state = JSON.stringify(row);
+    });
+    const animalform = shadowDocument.querySelector('#animalform');
+    animalform.addEventListener("submit", (e) => {
+        e.preventDefault(); // prevent default submit action
+        const animal = animalform.querySelector('#animal').value || "Dog";
+        const sound = animalform.querySelector('#sound').value || "Wuff!";
+        const icon = animalform.querySelector('#icon').value || "🐶";
+        Animals.insertAnimal({ animal, sound, icon })
+            .then(newid => {
+                if (newid > 0) {
+                    Animals.getAnimals().then(animals => {
+                        shadowDocument.host.dataset.state = JSON.stringify(animals);
+                    });
+                };
+            });
+    });
+    shadowDocument.addEventListener('refresh', e =>
+        Animals.getAnimals()
+            .then(animals => {
+                console.log("refreshing")
+                shadowDocument.host.dataset.state = JSON.stringify(animals);
+            })
+    );
+</script>
+
+<style>
+    ul {
+        list-style-type: none;
+        white-space: pre-line;
+    }
+
+    form {
+        display: flex;
+    }
+
+    form span {
+        display: block;
+    }
+</style>
+
+<template>
+    <h2>Create an animal</h2>
+    <form action="#" id="animalform">
+        <span>
+            <label for="animal">Animal:</label><br />
+            <input type="text" id="animal" name="animal" />
+        </span>
+        <span>
+            <label for="sound">Sound:</label><br />
+            <input type="text" id="sound" name="sound" />
+        </span>
+        <span>
+            <label for="icon">Icon:</label><br />
+            <input type="text" id="icon" name="icon" />
+        </span>
+        <input type="submit" value="CREATE" />
+    </form>
+    <ul></ul>
+</template>
