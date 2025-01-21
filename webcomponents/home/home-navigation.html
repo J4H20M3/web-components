@@ -55,10 +55,7 @@
                 section = document.createElement("views-main");
                 break;
             case "/animals":
-                Animals.getAnimals().then(resultRows => {
-                    section = document.createElement("animals-view");
-                    section.dataset.state = JSON.stringify(resultRows)
-                })
+                section = document.createElement("animals-view");
                 break;
             default:
         }
