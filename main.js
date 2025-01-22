@@ -10,7 +10,7 @@ function defineCustomElement(prefix, componentName, filePath) {
     const styleFragment = fragment.querySelector("style");
     const templateFragment = fragment.querySelector("template");
     customElements.define(`${prefix}-${componentName}`, class extends HTMLElement {
-      static observedAttributes = ["data-date", "data-state"];
+      static observedAttributes = ["data-state"];
       constructor() { // this is available after construction
         super();
         this.scriptInitialized = false;
@@ -26,7 +26,7 @@ function defineCustomElement(prefix, componentName, filePath) {
       }
       connectedCallback() {
         debug("connected", this.outerHTML);
-        this.hostDataIDs = []; // the hostDataIDs are used to find the shadowRoot for the WebComponent in the IIFE
+        this.hostDataIDs = []; // the hostDataIDs are used to find the shadowRoot for the WebComponent from the script
         this.dataset.id = Math.random().toString(16).substring(2, 8);
 
         let hostElement = this;
@@ -34,7 +34,6 @@ function defineCustomElement(prefix, componentName, filePath) {
           this.hostDataIDs.push(hostElement.dataset.id);
           hostElement = hostElement.getRootNode().host;
         }
-        // if (this.dataset.obs) { await registerObserver(this); } // if (this.dataset.if) { const shouldRender = await registerConditional(this); }
         this.render();
       }
       render() {
@@ -67,7 +66,6 @@ const shadowDocument = (function getDOM(hostDataIDs = '${this.hostDataIDs.revers
 if (shadowDocument) {
   const $ = (query) => shadowDocument.querySelector(query);
   const $$ = (query) => shadowDocument.querySelectorAll(query);
-  // HTMLElement.prototype.on = function (a, b, c) { return this.addEventListener(a, b, c); }
   const state = shadowDocument.host.dataset.state ? JSON.parse(shadowDocument.host.dataset.state) : undefined;
   ${scriptFragment ? scriptFragment.textContent : ''}
 } else {

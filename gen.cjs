@@ -2,7 +2,7 @@ const fs = require("fs");
 const { join } = require("path");
 
 const constants = {
-    WEBCOMPONENTS_DIR: join(".", "web-components"),
+    WEBCOMPONENTS_DIR: join(".", "webcomponents"),
 };
 
 const webcomponents = {};
