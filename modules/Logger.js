@@ -1,4 +1,4 @@
-const LOG_LEVEL = 3; // 2 ERROR, 3 WARN, 4 INFO, 5 DEBUG
+const LOG_LEVEL = 5; // 2 ERROR, 3 WARN, 4 INFO, 5 DEBUG
 
 export function error(...args) { if (LOG_LEVEL >= 2) console.error(...args); }
 

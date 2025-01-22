@@ -1,5 +1,5 @@
 import { webcomponents } from './webcomponents';
-import { registerObserver, unregisterObserver } from './stores/Global.js';
+import { debug } from './modules/Logger.js'
 
 //TODO: setting up nodes with attributes (data-state, @-click) creates state and listeners
 function defineCustomElement(prefix, componentName, filePath) {
@@ -15,15 +15,17 @@ function defineCustomElement(prefix, componentName, filePath) {
         super();
         this.scriptInitialized = false;
         this.attachShadow({ mode: "open"});
-        // console.log("created", this.outerHTML);
+        debug("created", this.outerHTML);
       }
       attributeChangedCallback(name, oldValue, newValue) {
-        // console.log("attributeChanged", this.outerHTML);
-        this.disconnectedCallback();
-        this.connectedCallback();
+        if (newValue != oldValue) {
+          debug("attributeChanged", this.outerHTML);
+          this.disconnectedCallback();
+          this.connectedCallback();
+        }
       }
       connectedCallback() {
-        // console.log("connected", this.outerHTML);
+        debug("connected", this.outerHTML);
         this.hostDataIDs = []; // the hostDataIDs are used to find the shadowRoot for the WebComponent in the IIFE
         this.dataset.id = Math.random().toString(16).substring(2, 8);
 
@@ -36,7 +38,7 @@ function defineCustomElement(prefix, componentName, filePath) {
         this.render();
       }
       render() {
-        // console.log("rendering", this.outerHTML);
+        debug("rendering", this.outerHTML);
         if (templateFragment) {
           const newRange = document.createRange().createContextualFragment(templateFragment.innerHTML);
           this.shadowRoot.replaceChildren(newRange);
@@ -61,7 +63,11 @@ const shadowDocument = (function getDOM(hostDataIDs = '${this.hostDataIDs.revers
   }
   return shadowDocument;
 })();
+
 if (shadowDocument) {
+  const $ = (query) => shadowDocument.querySelector(query);
+  const $$ = (query) => shadowDocument.querySelectorAll(query);
+  // HTMLElement.prototype.on = function (a, b, c) { return this.addEventListener(a, b, c); }
   const state = shadowDocument.host.dataset.state ? JSON.parse(shadowDocument.host.dataset.state) : undefined;
   ${scriptFragment ? scriptFragment.textContent : ''}
 } else {
@@ -72,8 +78,7 @@ if (shadowDocument) {
         }
       }
       disconnectedCallback() {
-        // console.log("disconnected", this.outerHTML)
-        // if (this.dataset.obs) { unregisterObserver(this); } // if (this.dataset.if) { unregisterObserver(this); }
+        debug("disconnected", this.outerHTML)
         this.shadowRoot.replaceChildren(); // this is safe https://dom.spec.whatwg.org/#dom-parentnode-replacechildren
       }
     });
