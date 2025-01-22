@@ -9,17 +9,10 @@ HTML CSS JS WebComponents
    npm run dev
 ```
 
-## LOG
-    mkdir yhwh-script && cd yhwh-script
-    npm init
-    UNLICENSE
-    npm install --save vite @vitejs/plugin-basic-ssl
-    vite.config.js
-    index.html
-
 ## HowTo
-- create html files in the web-components folder: ./{WEBCOMPONENTS_DIR}/{prefix}/{prefix}-{suffix}.html
-- you have access to the ´´shadowDocument´´
+- create single HTML files for web-components under `./{WEBCOMPONENTS_DIR}/{prefix}/{prefix}-{suffix}.html`
+- you have access to the `shadowDocument`, `state`
+- set state by `shadowDocument.host.dataset.state = JSON.stringify({newState})`
 
 ## NO-GOs
 - Never addEventListener to shadowDocument. Shadow Root
