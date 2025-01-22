@@ -6,7 +6,8 @@ HTML CSS JS WebComponents
    cd web-components
    npm install
    npm run gen
-   npm run dev```
+   npm run dev
+```
 
 ## LOG
     mkdir yhwh-script && cd yhwh-script
