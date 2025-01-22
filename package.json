@@ -8,7 +8,9 @@
     "keywords": [
         "JavaScript",
         "WebComponents",
-        "CustomElements"
+        "CustomElements",
+        "Single File Components",
+        "SFC"
     ],
     "license": "Unlicense",
     "main": "index.js",
@@ -16,8 +18,12 @@
     "version": "1.0.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/J4H20M3/web-components"
+        "url": "https://github.com/J4H20M3/web-components.git"
     },
+    "bugs": {
+      "url": "https://github.com/J4H20M3/web-components/issues"
+    },
+    "homepage": "https://github.com/J4H20M3/web-components#readme",
     "scripts": {
         "dev": "vite",
         "gen": "node gen.cjs",
