@@ -7,12 +7,13 @@
     "description": "web-components built yhwh-script style",
     "keywords": [
         "JavaScript",
-        "WebComponents"
+        "WebComponents",
+        "CustomElements"
     ],
     "license": "Unlicense",
     "main": "index.js",
     "name": "web-components",
-    "version": "0.1.0",
+    "version": "1.1.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/J4H20M3/web-components"
