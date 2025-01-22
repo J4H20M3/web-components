@@ -10,7 +10,7 @@ HTML CSS JS WebComponents
 ```
 
 ## How-To
-- create single HTML files for web-components under `./{WEBCOMPONENTS_DIR}/{prefix}/{prefix}-{suffix}.html`
+- create single HTML files for customElements under `./{WEBCOMPONENTS_DIR}/{prefix}/{prefix}-{suffix}.html`
 - you have access to the `shadowDocument`, `state`
 - set state by `shadowDocument.host.dataset.state = JSON.stringify({newState})`
 
